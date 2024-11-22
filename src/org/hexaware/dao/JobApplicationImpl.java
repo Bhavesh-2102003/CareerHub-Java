@@ -49,5 +49,7 @@ public class JobApplicationImpl implements JobApplicationDAO{
 			sql.printStackTrace();
 		}
 		
+		return application;
+		
 	}
 }

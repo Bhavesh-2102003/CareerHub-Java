@@ -18,10 +18,10 @@ public class jobListingImpl implements JobListingDAO {
             stmt.setInt(2, job.getCompanyID());
             stmt.setString(3, job.getJobTitle());
             stmt.setString(4, job.getJobDescription());
-            stmt.setString(5, job.getJobLocation());
-            stmt.setDouble(6, job.getSalary());
-            stmt.setString(7, job.getJobType());
-            stmt.setString(8, job.getPostedDate()); 
+            stmt.setDouble(5, job.getSalary());
+            stmt.setString(6, job.getJobType());
+            stmt.setString(7, job.getPostedDate()); 
+            stmt.setString(8, job.getJobLocation());
 
             stmt.executeUpdate();
             System.out.println("Job listing inserted successfully!");

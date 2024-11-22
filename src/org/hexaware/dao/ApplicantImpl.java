@@ -10,7 +10,7 @@ public class ApplicantImpl implements ApplicantDAO{
 	
 	public void insertApplicant(Connection connection,Applicant applicant)
 	{
-		String query="INSERT INTO APPLICANTS VALUES(?,?,?,?,?,?,?)";
+		String query="INSERT INTO APPLICANTS VALUES(?,?,?,?,?,?)";
 		
 		try(PreparedStatement stmt=connection.prepareStatement(query))
 		{

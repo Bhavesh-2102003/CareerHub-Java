@@ -57,6 +57,7 @@ public class careerhub {
             System.out.println("6. Apply for Job");
             System.out.println("7. View All Applicants");
             System.out.println("8. Exit");
+            System.out.println("9. View all applications");
             
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
@@ -80,12 +81,12 @@ public class careerhub {
             	break;
             	
             case 2:
-            	// Add Job Listing
+            	
             	System.out.print("Enter Job ID: ");
             	int jobID = scanner.nextInt();
             	System.out.print("Enter Company ID: ");
             	int companyIDForJob = scanner.nextInt();
-            	scanner.nextLine();  // Consume newline
+            	scanner.nextLine();  
             	System.out.print("Enter Job Title: ");
             	String jobTitle = scanner.nextLine();
             	System.out.print("Enter Job Description: ");
@@ -94,7 +95,7 @@ public class careerhub {
             	String jobLocation = scanner.nextLine();
             	System.out.print("Enter Salary: ");
             	double salary = scanner.nextDouble();
-            	scanner.nextLine();  // Consume newline
+            	scanner.nextLine();  
             	System.out.print("Enter Job Type: ");
             	String jobType = scanner.nextLine();
             	System.out.print("Enter Posted Date (yyyy-mm-dd): ");
@@ -117,7 +118,15 @@ public class careerhub {
             	// View All Job Listings
             	System.out.println("Fetching all job listings...");
             	JobListingdao.getJobListing(connection).forEach(j -> {
-            		System.out.println("Job ID: " + j.getJobID() + ", Title: " + j.getJobTitle() + ", Company ID: " + j.getCompanyID());
+            		System.out.println(
+            			    "Job ID: " + j.getJobID() +
+            			    ", Title: " + j.getJobTitle() +
+            			    ", Company ID: " + j.getCompanyID() +
+            			    ", Description: " + j.getJobDescription() +
+            			    ", Salary: " + j.getSalary() +
+            			    ", Job Type: " + j.getJobType() +
+            			    ", Posted Date: " + j.getPostedDate()
+            			);
             	});
             	break;
             	
@@ -145,7 +154,7 @@ public class careerhub {
             	    }
             	    Applicant applicant = new Applicant(applicantID, firstName, lastName, email, phone, resume);
                 	applicantdao.insertApplicant(connection, applicant);
-                	System.out.println("Applicant added successfully!");
+                	System.out.println("Applicant added successfully!5");
             	} catch (InvalidEmailFormatException e) {
             	    System.out.println("Error: " + e.getMessage());
             	}
@@ -161,8 +170,13 @@ public class careerhub {
             	int jobIDForApplication = scanner.nextInt();
             	System.out.print("Enter Applicant ID: ");
             	int applicantIDForApplication = scanner.nextInt();
-            	String applicationDate = "2024-11-22";  // Example date
-            	String coverLetter = "This is my cover letter";
+            	scanner.nextLine();
+            	
+            	System.out.print("Enter Application Date (yyyy-MM-dd): ");
+            	String applicationDate = scanner.nextLine();
+            	
+            	System.out.println("Please enter your cover letter:");
+            	String coverLetter = scanner.nextLine();
             	
             	JobApplication jobApplication = new JobApplication(applicationID, jobIDForApplication, applicantIDForApplication, applicationDate, coverLetter);
             	JobApplicationdao.insertJobApplication(connection, jobApplication);
@@ -173,8 +187,13 @@ public class careerhub {
             	// View All Applicants
             	System.out.println("Fetching all applicants...");
             	applicantdao.getApplicants(connection).forEach(a -> {
-            		System.out.println("Applicant ID: " + a.getApplicantID() + ", Name: " + a.getFirstName() + " " + a.getLastName());
-            	});
+            		System.out.println(
+            			    "Applicant ID: " + a.getApplicantID() +
+            			    ", Name: " + a.getFirstName() + " " + a.getLastName() +
+            			    ", Email: " + a.getEmail() +
+            			    ", Phone: " + a.getPhone() +
+            			    ", Resume: " + a.getResume());            	
+            		});
             	break;
             	
             case 8:
@@ -187,6 +206,21 @@ public class careerhub {
             default:
             	System.out.println("Invalid choice. Please try again.");
             	break;
+            	
+            case 9:
+                
+                System.out.println("Fetching all applications...");
+                JobApplicationDAO jobApplicationDAO = new JobApplicationImpl();
+                jobApplicationDAO.getJobApplication(connection).forEach(app -> {
+                    System.out.println(
+                        "Application ID: " + app.getApplicationID() +
+                        ", Job ID: " + app.getJobID() +
+                        ", Applicant ID: " + app.getApplicantID() +
+                        ", Application Date: " + app.getApplicationDate() +
+                        ", Cover Letter: " + app.getCoverLetter()
+                    );
+                });
+                break;
             	
             }
 		}
